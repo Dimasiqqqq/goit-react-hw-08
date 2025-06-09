@@ -1,0 +1,28 @@
+.searchBox {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 30px;
+}
+
+.searchTitle {
+	font-size: 1.5em;
+	font-weight: 500;
+	font-family: inherit;
+	line-height: 1.3;
+	margin-bottom: 10px;
+}
+
+.searchInput {
+	font-size: 1.5em;
+	font-weight: 500;
+	font-family: inherit;
+	line-height: 1.3;
+	padding: 10px;
+	margin-bottom: 20px;
+	border: 2px solid black;
+	border-radius: 5px;
+}
+
+.searchInput::placeholder {
+	color: rgba(0, 0, 0, 0.327);
+}
