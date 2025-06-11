@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { apiGetUserContacts, apiAddUserContact, apiDeleteUserContact } from "./operations";
+import {
+	apiGetUserContacts,
+	apiAddUserContact,
+	apiDeleteUserContact,
+} from "./operations";
+import { logOut } from "../auth/operations"; // Імпортуємо логін/логаут дії
 
 const handlePending = (state) => {
 	state.isLoading = true;
@@ -26,6 +31,7 @@ const contactsSlice = createSlice({
 				state.items = action.payload;
 			})
 			.addCase(apiGetUserContacts.rejected, handleRejected)
+
 			.addCase(apiAddUserContact.pending, handlePending)
 			.addCase(apiAddUserContact.fulfilled, (state, action) => {
 				state.isLoading = false;
@@ -33,14 +39,25 @@ const contactsSlice = createSlice({
 				state.items.push(action.payload);
 			})
 			.addCase(apiAddUserContact.rejected, handleRejected)
+
 			.addCase(apiDeleteUserContact.pending, handlePending)
 			.addCase(apiDeleteUserContact.fulfilled, (state, action) => {
 				state.isLoading = false;
 				state.error = null;
-				const index = state.items.findIndex((contact) => contact.id === action.payload.id);
-				state.items.splice(index, 1);
+				const index = state.items.findIndex(
+					(contact) => contact.id === action.payload.id
+				);
+				if (index !== -1) {
+					state.items.splice(index, 1);
+				}
 			})
-			.addCase(apiDeleteUserContact.rejected, handleRejected);
+			.addCase(apiDeleteUserContact.rejected, handleRejected)
+
+			.addCase(logOut.fulfilled, (state) => {
+				state.items = [];
+				state.isLoading = false;
+				state.error = null;
+			});
 	},
 });
 

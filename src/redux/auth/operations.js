@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 import { requestGetCurrentUser, requestLogOut, requestSignIn, requestSignUp, setToken } from "./services";
 
 export const register = createAsyncThunk("auth/register", async (formData, thunkAPI) => {
@@ -51,3 +52,12 @@ export const refresh = createAsyncThunk(
 		},
 	}
 );
+
+export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+	try {
+		await axios.post("/users/logout");
+		return;
+	} catch (error) {
+		return thunkAPI.rejectWithValue(error.message);
+	}
+});
