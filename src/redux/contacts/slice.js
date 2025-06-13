@@ -4,7 +4,7 @@ import {
 	apiAddUserContact,
 	apiDeleteUserContact,
 } from "./operations";
-import { logOut } from "../auth/operations"; // Імпортуємо логін/логаут дії
+import { logout } from "../auth/operations"; // Імпортуємо логін/логаут дії
 
 const handlePending = (state) => {
 	state.isLoading = true;
@@ -53,7 +53,7 @@ const contactsSlice = createSlice({
 			})
 			.addCase(apiDeleteUserContact.rejected, handleRejected)
 
-			.addCase(logOut.fulfilled, (state) => {
+			.addCase(logout.fulfilled, (state) => {
 				state.items = [];
 				state.isLoading = false;
 				state.error = null;
