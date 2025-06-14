@@ -7,17 +7,16 @@ import {
   setToken 
 } from "./services";
 
-
 export const register = createAsyncThunk(
   "auth/register",
   async (formData, thunkAPI) => {
-    const { email, password } = formData || {};
-    if (!email || !password) {
-      return thunkAPI.rejectWithValue("Email and password are required!");
+    const { name, email, password } = formData || {};
+    if (!name || !email || !password) {
+      return thunkAPI.rejectWithValue("Name, email and password are required!");
     }
 
     try {
-      const data = await requestSignUp(formData);
+      const data = await requestSignUp({ name, email, password });
       return data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
@@ -35,7 +34,7 @@ export const login = createAsyncThunk(
     }
 
     try {
-      const data = await requestSignIn(formData);
+      const data = await requestSignIn({ email, password });
       return data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
